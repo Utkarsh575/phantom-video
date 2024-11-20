@@ -14,8 +14,7 @@ const nextConfig: NextConfig = {
         headers: [
           { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
           { key: 'Cross-Origin-Embedder-Policy', value: 'require-corp' },
-          { key: 'Access-Control-Allow-Origin', value: 'https://gcsufutkzbkjfygxvcpr.supabase.co' }, // For Supabase storage
-          { key: 'Access-Control-Allow-Origin', value: 'https://assets.streampot.io' }, // For Streampot assets
+          { key: 'Access-Control-Allow-Origin', value: '*' }, // Allow all origins
         ],
       },
     ];
