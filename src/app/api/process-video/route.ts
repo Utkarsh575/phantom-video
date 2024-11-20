@@ -116,7 +116,7 @@ export const POST = async (req: Request) => {
     }
     await supabase.storage.from("temp-overlays").remove([overlayFileName]);
 
-    return NextResponse.json({ url: watermarkedVideo });
+    return NextResponse.json({ url: watermarkedVideo.outputs["output.mp4"] });
   } catch (error) {
     console.error("Error processing video:", error);
     return NextResponse.json(

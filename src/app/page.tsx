@@ -138,7 +138,7 @@ export default function Component() {
 
       const responseData = await response.json();
       console.log(responseData);
-      const videoUrl = responseData.url.outputs["output.mp4"];
+      const videoUrl = responseData.url;
       setDownloadLink(videoUrl);
       setHasGeneratedVideo(true);
       toast.success("Video processed successfully!");
