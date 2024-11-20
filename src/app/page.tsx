@@ -24,7 +24,7 @@ import {
   DollarSign,
   Send,
   QrCode,
-  Scan,
+  PanelRight,
   Search,
   Loader2,
   Download,
@@ -42,8 +42,10 @@ export default function Component() {
     initials: "CD",
     range: "$1,250 to $125,000",
     amount: "$47,892.65",
-    percentage: "+2.34%",
-    change: "+18.72%",
+    gainAmount: "+$2.34",
+    gainPercentage: "+18.72%",
+    change: "+$2.34",
+    percentage: "+18.72%",
     solanaBalance: "223.45",
     solanaPrice: "$124.83",
     solanaChange: "+$4.87",
@@ -175,8 +177,10 @@ export default function Component() {
       initials: "CD",
       range: "$1,250 to $125,000",
       amount: "$47,892.65",
-      percentage: "+2.34%",
-      change: "+18.72%",
+      gainAmount: "+$2.34",
+      gainPercentage: "+18.72%",
+      change: "+$2.34",
+      percentage: "+18.72%",
       solanaBalance: "223.45",
       solanaPrice: "$124.83",
       solanaChange: "+$4.87",
@@ -299,6 +303,22 @@ export default function Component() {
             </div>
             <div className="space-y-2">
               <Label
+                htmlFor="gainAmount"
+                className="text-white text-sm sm:text-base font-semibold"
+              >
+                Gain Amount
+              </Label>
+              <Input
+                id="gainAmount"
+                value={overlayData.gainAmount}
+                onChange={(e) =>
+                  setOverlayData({ ...overlayData, gainAmount: e.target.value })
+                }
+                className="bg-[#87efac] text-[#1b1d28]"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label
                 htmlFor="solanaBalance"
                 className="text-white text-sm sm:text-base font-semibold"
               >
@@ -337,7 +357,7 @@ export default function Component() {
             </div>
             <div className="space-y-2">
               <Label
-                htmlFor="amount"
+                htmlFor="solanaChange"
                 className="text-white text-sm sm:text-base font-semibold"
               >
                 Solana Change
@@ -356,32 +376,36 @@ export default function Component() {
             </div>
             <div className="space-y-2">
               <Label
-                htmlFor="percentage"
+                htmlFor="gainPercentage"
                 className="text-white text-sm sm:text-base font-semibold"
               >
-                Gain Amount
+                Gain Percentage
               </Label>
               <Input
-                id="percentage"
-                value={overlayData.percentage}
+                id="gainPercentage"
+                value={overlayData.gainPercentage}
                 onChange={(e) =>
-                  setOverlayData({ ...overlayData, percentage: e.target.value })
+                  setOverlayData({
+                    ...overlayData,
+                    gainPercentage: e.target.value,
+                  })
                 }
                 className="bg-[#87efac] text-[#1b1d28]"
               />
             </div>
+
             <div className="space-y-2">
               <Label
-                htmlFor="change"
+                htmlFor="initials"
                 className="text-white text-sm sm:text-base font-semibold"
               >
-                Gain
+                Initials
               </Label>
               <Input
-                id="change"
-                value={overlayData.change}
+                id="initials"
+                value={overlayData.initials}
                 onChange={(e) =>
-                  setOverlayData({ ...overlayData, change: e.target.value })
+                  setOverlayData({ ...overlayData, initials: e.target.value })
                 }
                 className="bg-[#87efac] text-[#1b1d28]"
               />
@@ -475,8 +499,8 @@ export default function Component() {
           initials={overlayData.initials}
           range={overlayData.range}
           amount={overlayData.amount}
-          percentage={overlayData.percentage}
-          change={overlayData.change}
+          gainAmount={overlayData.gainAmount}
+          gainPercentage={overlayData.gainPercentage}
           solanaBalance={overlayData.solanaBalance}
           solanaPrice={overlayData.solanaPrice}
           solanaChange={overlayData.solanaChange}
@@ -548,8 +572,8 @@ interface PhantomWalletOverlayProps {
   initials: string;
   range: string;
   amount: string;
-  percentage: string;
-  change: string;
+  gainAmount: string;
+  gainPercentage: string;
   solanaBalance: string;
   solanaPrice: string;
   solanaChange: string;
@@ -558,8 +582,8 @@ const PhantomWalletOverlay = ({
   initials,
   range,
   amount,
-  percentage,
-  change,
+  gainAmount,
+  gainPercentage,
   solanaBalance,
   solanaPrice,
   solanaChange,
@@ -567,38 +591,40 @@ const PhantomWalletOverlay = ({
   return (
     <div
       id="overlay-content"
-      className="-z-10 absolute top-0 left-0 w-[50px] h-[50px] bg-black opacity-[70%] flex flex-col items-center justify-center bg-gradient-to-b from-green-900 to-transparent "
+      className="-z-10 absolute top-0 left-0 w-[50px] h-[50px] bg-black opacity-[70%] flex flex-col items-center justify-start bg-gradient-to-b from-green-900 to-transparent "
     >
-      <div className="flex items-center justify-between space-x-2 w-full   ">
-        <div className="flex items-center justify-center gap-5 mx-10 my-5  ">
-          <div className="bg-purple-500  rounded-full w-[50px] h-[50px] text-center flex items-center  justify-center">
-            <h1 className="text-neutral-200 text-xl font-bold -translate-y-2">
+      <div className="flex items-center justify-between space-x-2 w-full  ">
+        <div className="flex items-center justify-center gap-5 mx-5 my-2  ">
+          <div className="bg-purple-500  rounded-full w-[50px] h-[50px] text-center flex items-center  justify-center translate-y-[3px]">
+            <h1 className="text-neutral-200 text-xl font-bold -translate-y-[9px] font-roboto">
               {initials}
             </h1>
           </div>
-          <span className="text-white text-xl font-semibold -translate-y-2 ">
+          <span className="text-white text-xl font-semibold -translate-y-2 font-roboto">
             {range}
           </span>
         </div>
         <div className="flex items-center justify-center">
-          <Scan className="text-white w-8 h-8 mr-5" />
           <Search className="text-white w-8 h-8 mr-10" />
+          <PanelRight className="text-white w-8 h-8 mr-5" />
         </div>
       </div>
-      <div className=" mt-10 mb-5 ">
-        <h1 className="text-white text-5xl font-bold">{amount}</h1>
+      <div className=" mt-5 mb-5 ">
+        <h1 className="text-white text-5xl font-bold font-roboto">{amount}</h1>
       </div>
       <div className="flex items-center justify-center ">
         <div className=" mr-2 mt-2 -translate-y-3">
-          <h1 className="text-green-500 text-2xl font-semibold">
-            {percentage}
+          <h1 className="text-green-500 text-2xl font-base font-roboto">
+            {gainAmount}
           </h1>
         </div>
         <div className=" bg-green-900 rounded-md  mt-1">
-          <h1 className="text-2xl  text-green-500 -translate-y-2">{change}</h1>
+          <h1 className="text-2xl  text-green-500 -translate-y-2 roboto">
+            {gainPercentage}
+          </h1>
         </div>
       </div>
-      <div className="flex space-x-4 mt-4">
+      <div className="flex space-x-4 mt-10 font-roboto">
         <button className="bg-[#2a2a2a] text-neutral-300 font-bold w-[100px] h-[100px] justify-center rounded-2xl flex flex-col items-center">
           <QrCode className="text-[#ab9ff2]" /> Receive
         </button>
@@ -612,7 +638,7 @@ const PhantomWalletOverlay = ({
           <DollarSign className="text-[#ab9ff2]" /> Buy
         </button>
       </div>
-      <div className="bg-[#2a2a2a] text-white p-4 pb-5 mt-4 flex items-center justify-between w-[90%] rounded-2xl mb-10">
+      <div className="bg-[#2a2a2a] text-white p-4 pb-5  flex items-center justify-between w-[90%] rounded-2xl mt-10">
         <div className="flex items-center justify-center">
           <div>
             <Image
@@ -624,15 +650,17 @@ const PhantomWalletOverlay = ({
             />
           </div>
           <div className="-translate-y-2">
-            <div className="text-neutral-300 font-bold text-lg">Solana</div>
-            <div className="text-neutral-500 font-bold text-md">
+            <div className="text-neutral-300 font-bold text-lg font-roboto">
+              Solana
+            </div>
+            <div className="text-neutral-500 font-bold text-md font-roboto">
               {solanaBalance}
             </div>
           </div>
         </div>
-        <div className="flex flex-col items-end -translate-y-2">
+        <div className="flex flex-col items-end -translate-y-2 font-roboto">
           <div>{solanaPrice}</div>
-          <div className="text-green-500">{solanaChange}</div>
+          <div className="text-green-500 font-roboto">{solanaChange}</div>
         </div>
       </div>
     </div>
